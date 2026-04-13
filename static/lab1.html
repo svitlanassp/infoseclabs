@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1: PRNG</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root { --accent: #3b82f6; --accent-hover: #2563eb; }
+        .nav { max-width: 800px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="/">← Повернутися в меню</a></div>
+
+    <div class="container container--wide">
+        <h1>Lab 1: PRNG</h1>
+
+        <div class="card">
+            <h2>Параметри генератора</h2>
+            <div class="form-group"><label for="m">Modulus (m):</label><input type="number" id="m" value="268435455"></div>
+            <div class="form-group"><label for="a">Multiplier (a):</label><input type="number" id="a" value="3375"></div>
+            <div class="form-group"><label for="c">Increment (c):</label><input type="number" id="c" value="4181"></div>
+            <div class="form-group"><label for="x0">Seed (X₀):</label><input type="number" id="x0" value="19"></div>
+            <div class="form-group"><label for="n">Length (n):</label><input type="number" id="n" value="100000"></div>
+            <button onclick="runLab1()">Run Analysis</button>
+            <div id="loader" class="loader">Рахую, зачекайте...</div>
+        </div>
+
+        <div class="card">
+            <h2>Результати</h2>
+            <p>Estimated Pi (My Generator): <strong id="my-pi" style="color: #34d399;">---</strong></p>
+            <p>Estimated Pi (Python Random): <strong id="rand-pi" style="color: #60a5fa;">---</strong></p>
+            <div class="result-box result-box--scroll" id="res-box">Згенерована послідовність з'явиться тут...</div>
+        </div>
+    </div>
+
+    <script src="/static/js/lab1.js"></script>
+</body>
+</html>

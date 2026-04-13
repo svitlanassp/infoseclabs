@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3: RC5 Cipher</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root { --accent: #10b981; --accent-hover: #059669; }
+        .btn-enc { background: var(--accent); }
+        .btn-dec { background: #3b82f6; }
+        .btn-dec:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="/">← Повернутися в меню</a></div>
+
+    <div class="container">
+        <h1>Lab 3: RC5-16/16/32</h1>
+
+        <div class="card">
+            <label for="pass">Парольна фраза:</label>
+            <input type="password" id="pass" placeholder="Введіть секретний ключ..." autocomplete="new-password">
+
+            <label for="file">Файл для обробки:</label>
+            <input type="file" id="file">
+
+            <div class="flex-btns">
+                <button class="btn-enc" onclick="process('encrypt')">🔒 Зашифрувати</button>
+                <button class="btn-dec" onclick="process('decrypt')">🔓 Розшифрувати</button>
+            </div>
+            <div id="status" class="status">Очікування файлу...</div>
+        </div>
+    </div>
+
+    <script src="/static/js/lab3.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5: Digital Signature (DSA)</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="nav"><a href="/">← Повернутися в меню</a></div>
+
+    <div class="container">
+        <h1>Lab 5: DSA</h1>
+
+        <div class="card">
+            <h2>1. Генерація ключів</h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">Згенеруйте нову пару ключів для DSA.</p>
+            <button onclick="generateKeys()">🔑 Згенерувати та завантажити</button>
+            <div id="status-gen" class="status"></div>
+        </div>
+
+        <div class="card">
+            <h2>2. Створення підпису</h2>
+            <label for="sign-key">Приватний ключ (.pem):</label>
+            <input type="file" id="sign-key">
+
+            <div class="toggle-group">
+                <button class="toggle-btn active" onclick="switchTab('sign', 'text')" id="btn-sign-text">📝 Рядок тексту</button>
+                <button class="toggle-btn" onclick="switchTab('sign', 'file')" id="btn-sign-file">📄 Файл</button>
+            </div>
+
+            <div id="section-sign-text" class="input-section active">
+                <label for="sign-text-input">Текст для підпису:</label>
+                <input type="text" id="sign-text-input" placeholder="Введіть текст...">
+            </div>
+
+            <div id="section-sign-file" class="input-section">
+                <label for="sign-file-input">Файл для підпису:</label>
+                <input type="file" id="sign-file-input">
+            </div>
+
+            <button onclick="processSign()">Отримати підпис</button>
+            <div id="status-sign" class="status"></div>
+        </div>
+
+        <div class="card">
+            <h2>3. Перевірка підпису</h2>
+            <label for="verify-key">Публічний ключ (.pem):</label>
+            <input type="file" id="verify-key">
+
+            <div class="toggle-group">
+                <button class="toggle-btn active" onclick="switchTab('verify', 'text')" id="btn-verify-text">📝 Рядок тексту</button>
+                <button class="toggle-btn" onclick="switchTab('verify', 'file')" id="btn-verify-file">📄 Файл</button>
+            </div>
+
+            <div id="section-verify-text" class="input-section active">
+                <label for="verify-text-input">Оригінальний текст:</label>
+                <input type="text" id="verify-text-input" placeholder="Введіть текст...">
+            </div>
+
+            <div id="section-verify-file" class="input-section">
+                <label for="verify-file-input">Оригінальний файл:</label>
+                <input type="file" id="verify-file-input">
+            </div>
+
+            <label for="verify-sig-input">Файл підпису (.sig):</label>
+            <input type="file" id="verify-sig-input" accept=".sig">
+
+            <button onclick="processVerify()" class="btn-green">Перевірити справжність</button>
+            <div id="status-verify" class="status"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/lab5.js"></script>
+</body>
+</html>

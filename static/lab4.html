@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4: RSA Cipher</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root { --accent: #8b5cf6; --accent-hover: #7c3aed; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="/">← Повернутися в меню</a></div>
+
+    <div class="container">
+        <h1>Lab 4: RSA</h1>
+
+        <div class="card">
+            <h2>1. Генерація ключів</h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">Згенеруйте нову пару ключів (Public &amp; Private) для шифрування.</p>
+            <button onclick="generateKeys()" class="btn-blue">🔑 Згенерувати та завантажити</button>
+            <div id="status-gen" class="status"></div>
+        </div>
+
+        <div class="card">
+            <h2>2. Шифрування файлу</h2>
+            <label for="enc-key-file">Публічний ключ:</label>
+            <input type="file" id="enc-key-file" accept=".pem">
+
+            <label for="enc-data-file">Файл для шифрування:</label>
+            <input type="file" id="enc-data-file">
+
+            <button onclick="process('encrypt')">🔒 Зашифрувати файл</button>
+            <div id="status-enc" class="status"></div>
+        </div>
+
+        <div class="card">
+            <h2>3. Розшифрування файлу</h2>
+            <label for="dec-key-file">Приватний ключ:</label>
+            <input type="file" id="dec-key-file" accept=".pem">
+
+            <label for="dec-data-file">Зашифрований файл:</label>
+            <input type="file" id="dec-data-file">
+
+            <button onclick="process('decrypt')" class="btn-green">🔓 Розшифрувати файл</button>
+            <div id="status-dec" class="status"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/lab4.js"></script>
+</body>
+</html>

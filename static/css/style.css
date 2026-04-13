@@ -1,0 +1,133 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --input-bg: #0f172a;
+    --border-color: #334155;
+    --error-color: #ef4444;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav { width: 100%; max-width: 600px; margin-bottom: 20px; }
+.nav a {
+    color: var(--text); text-decoration: none; font-weight: bold;
+    padding: 8px 16px; background: var(--card); border-radius: 8px;
+    border: 1px solid var(--border-color); transition: 0.2s;
+}
+.nav a:hover { border-color: var(--accent); }
+
+.container {
+    width: 100%; max-width: 600px;
+    display: flex; flex-direction: column; gap: 20px;
+}
+.container--wide { max-width: 800px; }
+
+.card {
+    background: var(--card); padding: 30px; border-radius: 12px;
+    border: 1px solid var(--border-color); margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 { margin-bottom: 10px; }
+h2 {
+    margin-top: 0; color: var(--accent); font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px;
+}
+
+input[type="file"],
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea {
+    background: var(--input-bg); border: 1px solid var(--border-color);
+    color: var(--text); padding: 12px; border-radius: 6px;
+    width: 100%; box-sizing: border-box; margin-bottom: 15px;
+    outline: none; font-family: monospace; transition: 0.2s;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+textarea:focus { border-color: var(--accent); }
+
+input[type="file"]::file-selector-button {
+    background: #334155; color: white; border: none;
+    padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 10px;
+}
+
+label { display: block; margin-bottom: 5px; font-weight: bold; color: #cbd5e1; font-size: 0.9rem; }
+.sub-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; display: block; }
+
+hr { border: 0; border-top: 1px solid var(--border-color); margin: 20px 0; }
+
+button {
+    width: 100%; padding: 14px; border-radius: 6px; border: none; cursor: pointer;
+    font-weight: bold; color: white; transition: 0.2s; margin-top: 10px; background: var(--accent);
+}
+button:hover { background: var(--accent-hover); transform: scale(0.99); }
+
+.btn-green { background: var(--accent-green); }
+.btn-green:hover { background: #059669; }
+
+.btn-blue { background: #3b82f6; }
+.btn-blue:hover { background: #2563eb; }
+
+.btn-save {
+    background: #334155; margin-top: 10px;
+    font-size: 0.8rem; padding: 8px 16px;
+    display: none; width: auto;
+}
+
+.flex-btns { display: flex; gap: 10px; }
+.flex-btns button { flex: 1; }
+
+.flex-row { display: flex; gap: 10px; align-items: center; }
+.flex-row input { margin-bottom: 0; flex: 1; }
+.flex-row button { width: auto; margin-top: 0; }
+
+.form-group {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+}
+.form-group input { width: 60%; margin-bottom: 0; }
+
+.result-box {
+    background: var(--input-bg); padding: 15px; border-radius: 6px;
+    border: 1px solid var(--border-color); font-family: monospace;
+    margin-top: 15px; color: var(--text-muted);
+    word-wrap: break-word; line-height: 1.5;
+}
+.result-box--scroll { max-height: 200px; overflow-y: auto; }
+
+.status { margin-top: 15px; font-size: 0.9rem; text-align: center; color: var(--text-muted); word-break: break-all; }
+.error-text { color: var(--error-color); }
+.success-text { color: var(--accent-green); }
+
+.loader { color: #fbbf24; display: none; margin-top: 10px; text-align: center; font-size: 0.9rem; }
+
+.toggle-group { display: flex; gap: 10px; margin-bottom: 15px; }
+.toggle-btn {
+    flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);
+    background: var(--card); color: var(--text-muted); cursor: pointer;
+    text-align: center; transition: 0.2s; margin-top: 0;
+}
+.toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.input-section { display: none; }
+.input-section.active { display: block; }
+
+textarea { resize: vertical; }

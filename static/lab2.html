@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2: MD5</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        :root { --accent: #8b5cf6; --accent-hover: #7c3aed; }
+        .nav { max-width: 800px; }
+        #str-res, #file-res { color: #a78bfa; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="/">← Повернутися в меню</a></div>
+
+    <div class="container container--wide">
+        <h1>Lab 2: MD5</h1>
+
+        <div class="card">
+            <h2>Хешування рядка</h2>
+            <div class="flex-row">
+                <label for="str-input" style="display: none;">Введіть текст:</label>
+                <input type="text" id="str-input" placeholder="Введіть текст...">
+                <button onclick="hashString()">Хешувати</button>
+            </div>
+            <div id="str-res" class="result-box">Результат...</div>
+            <button id="save-str-btn" class="btn-save" onclick="saveToFile('string')">📥 Зберегти у файл</button>
+        </div>
+
+        <div class="card">
+            <h2>Робота з файлом</h2>
+
+            <label for="file-input" class="sub-label">1. Оберіть файл для обробки:</label>
+            <input type="file" id="file-input">
+
+            <hr>
+
+            <label for="expected-hash" class="sub-label">2. Перевірка цілісності (опціонально):</label>
+            <input type="text" id="expected-hash" placeholder="Введіть хеш вручну...">
+
+            <label for="hash-file-input" class="sub-label">АБО оберіть файл із хешем:</label>
+            <input type="file" id="hash-file-input" accept=".txt,.md5" onchange="readHashFile(this)">
+
+            <div style="margin-top: 10px;">
+                <button onclick="processFile()">Обробити файл</button>
+            </div>
+
+            <div id="file-loader" class="loader">Зачекайте...</div>
+            <div id="file-res" class="result-box">Результат...</div>
+            <button id="save-file-btn" class="btn-save" onclick="saveToFile('file')">📥 Зберегти у файл</button>
+        </div>
+    </div>
+
+    <script src="/static/js/lab2.js"></script>
+</body>
+</html>
