@@ -26,7 +26,7 @@ async function generateKeys() {
         const response = await fetch('/api/lab5/generate-keys', { method: 'POST' });
         const data = await response.json();
 
-        const time = new Date().toLocaleTimeString('uk-UA').replace(/:/g, '-');
+        const time = new Date().toLocaleTimeString('uk-UA').replaceAll(':', '-');
 
         const downloadFile = (name, base64Content) => {
             const link = document.createElement('a');
