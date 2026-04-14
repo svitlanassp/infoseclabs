@@ -51,7 +51,7 @@ async function process(mode) {
         const response = await fetch(`/api/lab4/${mode}`, { method: 'POST', body: formData });
 
         const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
+        if (contentType?.includes("application/json")) {
             const err = await response.json();
             status.innerText = `❌ ${err.error}`;
             status.className = "status error-text";
@@ -60,7 +60,7 @@ async function process(mode) {
 
         if (response.ok) {
             const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
+            const url = globalThis.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
 
