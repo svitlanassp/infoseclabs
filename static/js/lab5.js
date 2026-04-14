@@ -42,6 +42,7 @@ async function generateKeys() {
         status.innerText = `✅ Ключі успішно збережено`;
         status.className = "status success-text";
     } catch (e) {
+        console.error(e);
         status.innerText = "❌ Помилка при генерації ключів.";
         status.className = "status error-text";
     }
@@ -112,6 +113,7 @@ async function processSign() {
             status.className = "status success-text";
         }
     } catch (e) {
+        console.error(e);
         status.innerText = "❌ Помилка з'єднання.";
         status.className = "status error-text";
     }
@@ -171,6 +173,7 @@ async function processVerify() {
             status.className = "status error-text";
         }
     } catch (e) {
+        console.error(e);
         status.innerText = "❌ Помилка при перевірці.";
         status.className = "status error-text";
     }
