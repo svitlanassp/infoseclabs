@@ -30,6 +30,7 @@ async function process(mode) {
             status.innerText = "Помилка.";
         }
     } catch (e) {
+        console.error("Виникла помилка під час запиту:", e);
         alert("З'єднання втрачено");
         status.innerText = "Помилка.";
     }
