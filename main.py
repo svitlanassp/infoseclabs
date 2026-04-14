@@ -63,7 +63,7 @@ class Lab1Request(BaseModel):
     n: int
 
 
-@app.post("/api/lab1/run")
+@app.post("/api/lab1/run", responses={400: {"description": "Некоректні параметри генератора"}})
 def run_lab1(data: Lab1Request):
     if data.n < 2:
         raise HTTPException(status_code=400, detail="n must be ≥ 2")
@@ -117,7 +117,7 @@ def download_report(result: Annotated[str, Form(...)]):
 
 # Lab 3 — RC5
 
-@app.post("/api/lab3/encrypt")
+@app.post("/api/lab3/encrypt", responses={500: {"description": "Помилка внутрішнього шифрування"}})
 async def rc5_encrypt(
     background_tasks: BackgroundTasks,
     password: Annotated[str, Form(...)],
@@ -144,7 +144,7 @@ async def rc5_encrypt(
     return stream_file(out_path, background_tasks, f"{file.filename}.enc")
 
 
-@app.post("/api/lab3/decrypt")
+@app.post("/api/lab3/decrypt", responses={400: {"description": "Дешифрування неможливе (невірний пароль або файл)"}})
 async def rc5_decrypt(
     background_tasks: BackgroundTasks,
     password: Annotated[str, Form(...)],
@@ -184,7 +184,7 @@ def rsa_generate_keys():
     }
 
 
-@app.post("/api/lab4/encrypt")
+@app.post("/api/lab4/encrypt", responses={400: {"description": "Недійсний публічний ключ"}, 500: {"description": "Помилка шифрування"}})
 async def rsa_encrypt(
     background_tasks: BackgroundTasks,
     key_file: Annotated[UploadFile, File(...)],
@@ -211,7 +211,7 @@ async def rsa_encrypt(
     return stream_file(out_path, background_tasks, f"{data_file.filename}.enc")
 
 
-@app.post("/api/lab4/decrypt")
+@app.post("/api/lab4/decrypt", responses={400: {"description": "Недійсний приватний ключ або помилка дешифрування"}})
 async def rsa_decrypt(
     background_tasks: BackgroundTasks,
     key_file: Annotated[UploadFile, File(...)],
@@ -251,7 +251,7 @@ def dsa_generate_keys():
     }
 
 
-@app.post("/api/lab5/sign-text")
+@app.post("/api/lab5/sign-text", responses={400: {"description": "Недійсний приватний ключ"}, 500: {"description": "Помилка при підписанні"}})
 async def dsa_sign_text(
     text: Annotated[str, Form(...)],
     key_file: Annotated[UploadFile, File(...)],
@@ -271,7 +271,7 @@ async def dsa_sign_text(
     )
 
 
-@app.post("/api/lab5/verify-text")
+@app.post("/api/lab5/verify-text", responses={400: {"description": "Недійсний публічний ключ або помилка перевірки"}})
 async def dsa_verify_text(
     text: Annotated[str, Form(...)],
     sig_file: Annotated[UploadFile, File(...)],
@@ -287,7 +287,7 @@ async def dsa_verify_text(
         raise HTTPException(status_code=400, detail=f"Помилка при перевірці: {exc}") from exc
 
 
-@app.post("/api/lab5/sign-file")
+@app.post("/api/lab5/sign-file", responses={400: {"description": "Недійсний приватний ключ"}, 500: {"description": "Помилка при підписанні"}})
 async def dsa_sign_file(
     background_tasks: BackgroundTasks,
     key_file: Annotated[UploadFile, File(...)],
@@ -314,7 +314,7 @@ async def dsa_sign_file(
     return stream_file(out_path, background_tasks, f"{data_file.filename}.sig")
 
 
-@app.post("/api/lab5/verify-file")
+@app.post("/api/lab5/verify-file", responses={400: {"description": "Недійсний публічний ключ або помилка перевірки"}})
 async def dsa_verify_file(
     background_tasks: BackgroundTasks,
     key_file: Annotated[UploadFile, File(...)],
