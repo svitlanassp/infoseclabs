@@ -20,6 +20,7 @@ async function generateKeys() {
 
         status.innerText = `✅ Ключі збережено як private_key_${time}.pem та public_key_${time}.pem`;
     } catch (e) {
+        console.error("Виникла помилка:", e);
         status.innerText = "❌ Помилка при генерації.";
     }
 }
@@ -74,6 +75,7 @@ async function process(mode) {
             status.className = "status error-text";
         }
     } catch (e) {
+        console.error("Виникла помилка ", e);
         status.innerText = "❌ З'єднання втрачено.";
         status.className = "status error-text";
     }
