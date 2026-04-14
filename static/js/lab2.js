@@ -1,15 +1,17 @@
 let lastResult = { target: "", hash: "", type: "" };
 
-function readHashFile(input) {
+async function readHashFile(input) {
     const file = input.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const content = e.target.result.trim();
+
+    try {
+        const content = (await file.text()).trim();
+
         const hash = content.split(/\s+/)[0];
         document.getElementById('expected-hash').value = hash;
-    };
-    reader.readAsText(file);
+    } catch (e) {
+        console.error("Помилка читання файлу:", e);
+    }
 }
 
 async function hashString() {
@@ -83,7 +85,7 @@ async function saveToFile(source) {
 
     const response = await fetch('/api/lab2/download-report', { method: 'POST', body: formData });
     const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+    const url = globalThis.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = "md5_report.txt";
