@@ -65,9 +65,17 @@ async function process(mode) {
             a.href = url;
 
             let filename = dataInput.files[0].name;
-            a.download = isEnc
-                ? filename + ".enc"
-                : (filename.endsWith('.enc') ? filename.replace('.enc', '') : 'decrypted_' + filename);
+            
+            let downloadName;
+            if (isEnc) {
+                downloadName = filename + ".enc";
+            } else if (filename.endsWith('.enc')) {
+                downloadName = filename.replace('.enc', '');
+            } else {
+                downloadName = 'decrypted_' + filename;
+            }
+
+            a.download = downloadName;
             a.click();
             status.innerText = "✅ Готово! Файл завантажено.";
         } else {
