@@ -92,7 +92,7 @@ async function processSign() {
         const response = await fetch(endpoint, { method: 'POST', body: formData });
 
         const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
+        if (contentType?.includes("application/json")) {
             const data = await response.json();
             status.innerText = `❌ ${data.error}`;
             status.className = "status error-text";
@@ -103,7 +103,7 @@ async function processSign() {
             const hexSignature = await response.text();
 
             const blob = new Blob([hexSignature], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
+            const url = globalThis.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = fileName;
