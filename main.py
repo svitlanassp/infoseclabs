@@ -2,6 +2,7 @@ import os
 import base64
 import tempfile
 from urllib.parse import quote
+import aiofiles
 
 from fastapi import FastAPI, UploadFile, File, Form, Response, BackgroundTasks, HTTPException
 from fastapi.staticfiles import StaticFiles
@@ -121,8 +122,8 @@ async def rc5_encrypt(
     rc5 = RC5(password=password)
     data = await file.read()
 
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_in:
-        tmp_in.write(data)
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False) as tmp_in:
+        await tmp_in.write(data)
         in_path = tmp_in.name
 
     out_fd, out_path = tempfile.mkstemp(suffix=".enc")
@@ -148,8 +149,8 @@ async def rc5_decrypt(
     rc5 = RC5(password=password)
     data = await file.read()
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".enc") as tmp_in:
-        tmp_in.write(data)
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False, suffix=".enc") as tmp_in:
+        await tmp_in.write(data)
         in_path = tmp_in.name
 
     out_fd, out_path = tempfile.mkstemp()
@@ -188,8 +189,8 @@ async def rsa_encrypt(
     rsa = RSA()
     load_key(rsa, "load_public_key",  await key_file.read(), LABEL_PUBLIC_KEY)
 
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_in:
-        tmp_in.write(await data_file.read())
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False) as tmp_in:
+        await tmp_in.write(await data_file.read())
         in_path = tmp_in.name
 
     out_fd, out_path = tempfile.mkstemp(suffix=".enc")
@@ -215,8 +216,8 @@ async def rsa_decrypt(
     rsa = RSA()
     load_key(rsa, "load_private_key", await key_file.read(), LABEL_PRIVATE_KEY)
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".enc") as tmp_in:
-        tmp_in.write(await data_file.read())
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False, suffix=".enc") as tmp_in:
+        await tmp_in.write(await data_file.read())
         in_path = tmp_in.name
 
     out_fd, out_path = tempfile.mkstemp()
@@ -291,8 +292,8 @@ async def dsa_sign_file(
     dsa = DSA()
     load_key(dsa, "load_private_key", await key_file.read(), LABEL_PRIVATE_KEY)
 
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_in:
-        tmp_in.write(await data_file.read())
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False) as tmp_in:
+        await tmp_in.write(await data_file.read())
         in_path = tmp_in.name
 
     out_fd, out_path = tempfile.mkstemp(suffix=".sig")
@@ -319,12 +320,12 @@ async def dsa_verify_file(
     dsa = DSA()
     load_key(dsa, "load_public_key",  await key_file.read(), LABEL_PUBLIC_KEY)
 
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_data:
-        tmp_data.write(await data_file.read())
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False) as tmp_data:
+        await tmp_data.write(await data_file.read())
         data_path = tmp_data.name
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".sig") as tmp_sig:
-        tmp_sig.write(await sig_file.read())
+    async with aiofiles.tempfile.NamedTemporaryFile(delete=False, suffix=".sig") as tmp_sig:
+        await tmp_sig.write(await sig_file.read())
         sig_path = tmp_sig.name
 
     try:
