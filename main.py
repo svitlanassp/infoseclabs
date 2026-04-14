@@ -3,6 +3,7 @@ import base64
 import tempfile
 from urllib.parse import quote
 import aiofiles
+from typing import Annotated
 
 from fastapi import FastAPI, UploadFile, File, Form, Response, BackgroundTasks, HTTPException
 from fastapi.staticfiles import StaticFiles
@@ -82,18 +83,21 @@ def run_lab1(data: Lab1Request):
 # Lab 2 — MD5
 
 @app.post("/api/lab2/hash-string")
-def hash_string(text: str = Form("")):
+def hash_string(text: Annotated[str, Form()] = ""):
     return {"hash": MyMD5.hash_string(text)}
 
 
 @app.post("/api/lab2/hash-file")
-async def hash_file(file: UploadFile = File(...)):
+async def hash_file(file: Annotated[UploadFile, File(...)]):
     result = await MyMD5.hash_upload_file(file)
     return {"hash": result, "filename": file.filename}
 
 
 @app.post("/api/lab2/verify-file")
-async def verify_file(expected: str = Form(...), file: UploadFile = File(...)):
+async def verify_file(
+    expected: Annotated[str, Form(...)],
+    file: Annotated[UploadFile, File(...)]
+):
     actual = await MyMD5.hash_upload_file(file)
     return {
         "is_ok": actual.lower() == expected.strip().lower(),
@@ -103,7 +107,7 @@ async def verify_file(expected: str = Form(...), file: UploadFile = File(...)):
 
 
 @app.post("/api/lab2/download-report")
-def download_report(result: str = Form(...)):
+def download_report(result: Annotated[str, Form(...)]):
     return Response(
         content=result.strip(),
         media_type="text/plain",
@@ -116,8 +120,8 @@ def download_report(result: str = Form(...)):
 @app.post("/api/lab3/encrypt")
 async def rc5_encrypt(
     background_tasks: BackgroundTasks,
-    password: str = Form(...),
-    file: UploadFile = File(...),
+    password: Annotated[str, Form(...)],
+    file: Annotated[UploadFile, File(...)],
 ):
     rc5 = RC5(password=password)
     data = await file.read()
@@ -143,8 +147,8 @@ async def rc5_encrypt(
 @app.post("/api/lab3/decrypt")
 async def rc5_decrypt(
     background_tasks: BackgroundTasks,
-    password: str = Form(...),
-    file: UploadFile = File(...),
+    password: Annotated[str, Form(...)],
+    file: Annotated[UploadFile, File(...)],
 ):
     rc5 = RC5(password=password)
     data = await file.read()
@@ -183,8 +187,8 @@ def rsa_generate_keys():
 @app.post("/api/lab4/encrypt")
 async def rsa_encrypt(
     background_tasks: BackgroundTasks,
-    key_file: UploadFile = File(...),
-    data_file: UploadFile = File(...),
+    key_file: Annotated[UploadFile, File(...)],
+    data_file: Annotated[UploadFile, File(...)],
 ):
     rsa = RSA()
     load_key(rsa, "load_public_key",  await key_file.read(), LABEL_PUBLIC_KEY)
@@ -210,8 +214,8 @@ async def rsa_encrypt(
 @app.post("/api/lab4/decrypt")
 async def rsa_decrypt(
     background_tasks: BackgroundTasks,
-    key_file: UploadFile = File(...),
-    data_file: UploadFile = File(...),
+    key_file: Annotated[UploadFile, File(...)],
+    data_file: Annotated[UploadFile, File(...)],
 ):
     rsa = RSA()
     load_key(rsa, "load_private_key", await key_file.read(), LABEL_PRIVATE_KEY)
@@ -249,8 +253,8 @@ def dsa_generate_keys():
 
 @app.post("/api/lab5/sign-text")
 async def dsa_sign_text(
-    text: str = Form(...),
-    key_file: UploadFile = File(...),
+    text: Annotated[str, Form(...)],
+    key_file: Annotated[UploadFile, File(...)],
 ):
     dsa = DSA()
     load_key(dsa, "load_private_key", await key_file.read(), LABEL_PRIVATE_KEY)
@@ -269,9 +273,9 @@ async def dsa_sign_text(
 
 @app.post("/api/lab5/verify-text")
 async def dsa_verify_text(
-    text: str = Form(...),
-    sig_file: UploadFile = File(...),
-    key_file: UploadFile = File(...),
+    text: Annotated[str, Form(...)],
+    sig_file: Annotated[UploadFile, File(...)],
+    key_file: Annotated[UploadFile, File(...)],
 ):
     dsa = DSA()
     load_key(dsa, "load_public_key",  await key_file.read(), LABEL_PUBLIC_KEY)
@@ -286,8 +290,8 @@ async def dsa_verify_text(
 @app.post("/api/lab5/sign-file")
 async def dsa_sign_file(
     background_tasks: BackgroundTasks,
-    key_file: UploadFile = File(...),
-    data_file: UploadFile = File(...),
+    key_file: Annotated[UploadFile, File(...)],
+    data_file: Annotated[UploadFile, File(...)],
 ):
     dsa = DSA()
     load_key(dsa, "load_private_key", await key_file.read(), LABEL_PRIVATE_KEY)
@@ -313,9 +317,9 @@ async def dsa_sign_file(
 @app.post("/api/lab5/verify-file")
 async def dsa_verify_file(
     background_tasks: BackgroundTasks,
-    key_file: UploadFile = File(...),
-    data_file: UploadFile = File(...),
-    sig_file: UploadFile = File(...),
+    key_file: Annotated[UploadFile, File(...)],
+    data_file: Annotated[UploadFile, File(...)],
+    sig_file: Annotated[UploadFile, File(...)],
 ):
     dsa = DSA()
     load_key(dsa, "load_public_key",  await key_file.read(), LABEL_PUBLIC_KEY)
