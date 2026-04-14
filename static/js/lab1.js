@@ -1,11 +1,11 @@
 async function runLab1() {
     document.getElementById('loader').style.display = 'block';
     const payload = {
-        m:  parseInt(document.getElementById('m').value),
-        a:  parseInt(document.getElementById('a').value),
-        c:  parseInt(document.getElementById('c').value),
-        x0: parseInt(document.getElementById('x0').value),
-        n:  parseInt(document.getElementById('n').value)
+        m:  Number.parseInt(document.getElementById('m').value),
+        a:  Number.parseInt(document.getElementById('a').value),
+        c:  Number.parseInt(document.getElementById('c').value),
+        x0: Number.parseInt(document.getElementById('x0').value),
+        n:  Number.parseInt(document.getElementById('n').value)
     };
 
     try {
