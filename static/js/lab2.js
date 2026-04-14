@@ -28,6 +28,7 @@ async function hashString() {
             type: "String Text Hashing"
         };
     } catch (e) {
+        console.error("Виникла помилка під час запиту:", e);
         alert("Помилка сервера");
     }
 }
@@ -67,6 +68,7 @@ async function processFile() {
         }
         document.getElementById('save-file-btn').style.display = 'block';
     } catch (e) {
+        console.error("Виникла помилка під час запиту:", e);
         alert("Помилка обробки");
     } finally {
         document.getElementById('file-loader').style.display = 'none';
