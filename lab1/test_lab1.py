@@ -1,5 +1,5 @@
 import unittest
-from lab1 import generator, gcd, cesaro, period
+from lab1.lab1 import generator, gcd, cesaro, period
 
 class TestGenerator(unittest.TestCase):
     def test_gcd(self):
